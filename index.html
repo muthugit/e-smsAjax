@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>e-Sms.in - Sending SMS via AJAX Call</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <input type="text" id="userName" placeholder="User name of http://portal.e-sms.in">
+        <input type="text" id="password" placeholder="password">
+        <input type="text" id="mask" placeholder="6 digit mask">
+        <input type="text" id="toNumbers" placeholder="Receivers">
+        <input type="text" id="message" placeholder="Message">
+        <button onclick="sendSMS()">Send SMS</button>
+        <div id="output"></div>
+    </body>
+
+
+    <script>
+        function sendSMS() {
+            //GETTING ALL INFORMATION AND ASSIGNED TO LOCAL VARIABLES
+            document.getElementById("output").innerHTML = "Wait sending....";
+            userName = document.getElementById("userName").value;
+            password = document.getElementById("password").value;
+            mask = document.getElementById("mask").value;
+            toNumbers = document.getElementById("toNumbers").value;
+            message = document.getElementById("message").value;
+
+            var arguments = "userName=" + userName + "&password=" + password +
+                    "&mask=" + mask + "&toNumbers=" + toNumbers + "&message=" + message;
+
+            //AJAX STARTED
+            var xmlhttp;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function ()
+            {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                {
+                    document.getElementById("output").innerHTML = xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET", "http://localhost/sms_ajax/ajaxCall.php?" + arguments, true);
+            xmlhttp.send();
+        }
+    </script>
+</html>
